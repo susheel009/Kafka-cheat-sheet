@@ -1,0 +1,55 @@
+:: 1. Start Zookeeper
+C:\Project\kafka\bin\windows\zookeeper-server-start.bat C:\Project\kafka\config\zookeeper.properties
+
+:: 2. Start Kafka Server
+C:\Project\kafka\bin\windows\kafka-server-start.bat C:\Project\kafka\config\server.properties
+
+:: 3. Create a New Topic
+C:\Project\kafka\bin\windows\kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic my_topic
+
+:: 4. List All Topics
+C:\Project\kafka\bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
+
+:: 5. Describe a Topic
+C:\Project\kafka\bin\windows\kafka-topics.bat --describe --zookeeper localhost:2181 --topic my_topic
+
+:: 6. Send Messages to a Topic (Producer)
+C:\Project\kafka\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic my_topic
+
+:: 7. Consume Messages from a Topic (Consumer)
+C:\Project\kafka\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic my_topic --from-beginning
+
+:: 8. Delete a Topic
+C:\Project\kafka\bin\windows\kafka-topics.bat --delete --zookeeper localhost:2181 --topic my_topic
+
+:: 9. Increase Partitions for a Topic
+C:\Project\kafka\bin\windows\kafka-topics.bat --alter --zookeeper localhost:2181 --topic my_topic --partitions 3
+
+:: 10. Check Topic Retention Configuration
+C:\Project\kafka\bin\windows\kafka-topics.bat --describe --zookeeper localhost:2181 --topic my_topic
+
+:: 11. Change Topic Retention (Set SLA)
+C:\Project\kafka\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --alter --topic my_topic --config retention.ms=3600000
+
+:: 12. Purge a Topic
+C:\Project\kafka\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --alter --topic my_topic --config retention.ms=1000
+:: Wait a minute...
+C:\Project\kafka\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --alter --topic my_topic --delete-config retention.ms
+
+:: 13. Check Offsets of a Topic
+C:\Project\kafka\bin\windows\kafka-run-class.bat kafka.tools.GetOffsetShell --broker-list localhost:9092 --topic my_topic --time -1
+
+:: 14. List Consumer Groups
+C:\Project\kafka\bin\windows\kafka-consumer-groups.bat --bootstrap-server localhost:9092 --list
+
+:: 15. Describe Consumer Group
+C:\Project\kafka\bin\windows\kafka-consumer-groups.bat --bootstrap-server localhost:9092 --describe --group my_group
+
+:: 16. Start the Zookeeper Shell
+C:\Project\kafka\bin\windows\zookeeper-shell.bat localhost:2181
+
+:: 17. Stop Kafka Server
+C:\Project\kafka\bin\windows\kafka-server-stop.bat
+
+:: 18. Stop Zookeeper
+C:\Project\kafka\bin\windows\zookeeper-server-stop.bat
